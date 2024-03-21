@@ -1,4 +1,4 @@
-# LoL-lane-analysis
+# The Winning Edge: A Comprehensive Analysis of Roles in League of Legends
 
 By Jason Huynh (jah037@ucsd.edu) and Jonathan Yi (j8yi@ucsd.edu)
 
@@ -8,11 +8,9 @@ Final Project for DSC80.
 
 ## Introduction
 
-Welcome to Summoner’s Rift! Since its release in 2009, League of Legends (LoL) has taken the gaming world by storm, becoming the #1 multiplayer online battle arena (MOBA) game in the world. Being a competitive game, players constantly strive to gain an edge to secure victory. As such, a question arises, what is the best way to obtain this goal?
+Welcome to Summoner’s Rift! Since its release in 2009, League of Legends (LoL) has taken the gaming world by storm, becoming the #1 multiplayer online battle arena (MOBA) game in the world. At its core, LoL pits two teams, each comprising five players, in a strategic battle to destroy the opposing team's Nexus. Players select one of five roles*: top, jungle, middle, adc, or support. In such a highly competitive game, players are constantly seeking ways to gain an upper hand, with the choice of role often being a critical factor in securing a win. Our data analysis aims to answer the question: "which role consistently carries their team to victory?"
 
-In League of Legends, two teams, each with five players, clash to destroy the opposing team's Nexus. Players select one of five roles*: top, jungle, middle, adc, or support. Our data analysis aims to answer the question: "which role consistently carries their team to victory?"
-
-*For ease of reference, the jungle, mid, and support roles will be abbreviated to jng, mid, and sup respectively. As well, we will be using the term 'role' and 'position' interchangebly.
+*The jungle, mid, and support roles will be abbreviated to jng, mid, and sup respectively. As well, the words 'role' and 'position' will be used interchangebly.
 
 ---
 
@@ -26,11 +24,17 @@ Then, we implemented the calculation and incorporation of the KDA (Kill-Death-As
 
 Lastly, we standardized our dataset's statistics. Employing the z-score formula Z = (X - µ) / σ, we transformed the data into z-scores for each game. To ensure accuracy, we created a custom function and applied it using the .transform(z-score) method after grouping by 'gameid'.
 
-Below are the initial five rows of our dataframe, showcasing the standardized statistics.
+Below are the initial five rows of our dataframe, showcasing the standardized statistics and omitting unnecessary columns for visualization purposes.
 
-*add df here*
+|    | gameid                | position   |        KDA |   totalgold |   total cs |   damagetochampions |
+|---:|:----------------------|:-----------|-----------:|------------:|-----------:|--------------------:|
+|  0 | ESPORTSTMNT06_2753012 | top        |  1.45409   |   -0.181853 |   1.05976  |           -0.546755 |
+|  1 | ESPORTSTMNT06_2753012 | jng        | -0.552391  |   -0.511447 |  -0.661093 |           -0.825695 |
+|  2 | ESPORTSTMNT06_2753012 | mid        |  0.45085   |   -0.334314 |   0.615204 |           -0.105894 |
+|  3 | ESPORTSTMNT06_2753012 | adc        |  2.02737   |   -0.255967 |   0.851821 |            0.412173 |
+|  4 | ESPORTSTMNT06_2753012 | sup        |  0.0208899 |   -0.670381 |  -1.65058  |           -0.844755 |
 
----
+### Univariate Analysis
 
 For our univariate analysis, we aimed to explore how various in-game statistics' z-scores distribute across different player roles. To begin, we grouped the data by the 'position' column, which represents the role each player assumes in the game. We chose not to include the 'team' values, as they do not relate to the positions.
 
@@ -70,7 +74,7 @@ Upon analyzing the graphs, several insights emerged. The middle and adc roles co
 
 In summary, our analysis suggests that the middle and adc roles tend to have a more substantial impact on the game across various statistics, while top, support, and jungle roles exhibit more diverse and sometimes less impactful performances.
 
----
+### Bivariate Analysis
 
 In our bivariate analysis, we aimed to explore the relationship between different statistics and player positions in the dataset. We employed two main visualization techniques: bar charts and box plots.
 
@@ -82,8 +86,6 @@ In our bivariate analysis, we aimed to explore the relationship between differen
 ></iframe>
 
 The bar graph above illustrates each position’s average z-score across all statistics. The x-axis represents the positions, while the y-axis indicates the average z-score. Each bar was color-coded to distinguish between positions, facilitating a visual comparison of z-scores across roles. Through this visualization, we noticed that the adc role had the highest average z-Score for all statistics, whereas support had the lowest average z-Score for all statistics.  
-
-Box Plots for KDA and Damage to Champions Across Positions:
 
 In addition to the bar charts, we created box plots to further analyze the distribution of z-scores for two specific statistics: KDA and damage to champions. Two separate box plots were generated—one for KDA and another for damage to champions. The x-axis indicated the player positions, while the y-axis represented the z-score of the respective statistic. The box plots provided insights into the central tendency, spread, and presence of outliers in the z-score distribution for each position, allowing for a more detailed examination of the data compared to the bar charts.
 
@@ -128,13 +130,13 @@ In contrast, this visualization reinforces our earlier observations, indicating 
 
 ## Assessment of Missingness
 
-# NMAR Analysis
+### NMAR Analysis
 
 We hypothesize that the absence of values in the 'ban5' column of our dataset is not missing at random (NMAR). The missing values in this column appear to lack a discernible pattern, suggesting potential scenarios where certain teams may have either overlooked banning a fifth champion or deemed it unnecessary. This dependence on the actual value of the missing data points renders the missingness NMAR.
 
 To mitigate this issue and transform the column into one with missingness at random (MAR), we propose the introduction of a new column named 'bancompleteness'. This new column would capture whether the total number of bans for each team, including the fifth ban, was complete. By incorporating this additional data, the 'ban5' column would no longer rely on the specific value of the missing data points but instead on the completeness of bans recorded in 'bancompleteness'.
 
-# Missingness Dependency
+### Missingness Dependency
 
 When we began this project, our curiosity was piqued by both the comprehensive dataset and the subset of data collected at the 15-minute mark. Intriguingly, we observed numerous missing values in columns corresponding to this specific time point. Consequently, we set out to scrutinize the relationship between missingness and the presence of data collected at the 15-minute mark, particularly focusing on the 'killsat15' column.
 
@@ -194,9 +196,9 @@ Upon comparing the Total Variation Distances (TVDs) obtained from permutation te
 
 We now aim to answer this question: do all roles have an equal overall impact?
 
-Null hypothesis: All roles have an equal impact overall.
+Null Hypothesis: All roles have an equal impact overall.
 
-Alternative hypothesis: All roles do not have an equal impact overall.
+Alternative Hypothesis: All roles do not have an equal impact overall.
 
 Test statistic: Total Variation Distance (TVD)
 
@@ -259,15 +261,11 @@ Our model's performance evaluation hinges on precision—a metric selected for i
 
 In our design, we took great care to ensure our predictive framework operates under the constraint of utilizing only in-game statistics available at the "time of prediction." Thus, during model training, we meticulously excluded any data points inaccessible during real-time gameplay.
 
----
-
 ### Baseline Model
 
 Our baseline model utilized a random forest classifier to predict positions based on three key features: KDA, total damage to champions, and total gold. These features, all quantitative variables, collectively encapsulate all important aspects of player performance. No further alterations or encodings were applied to these values. 
 
 The model's reported performance stands at 0.57, indicating that it predicts the correct position for 57% of the observations. Being that this accuracy level falls below the 60% threshold, it leaves lots of room for improvement. To raise this score, we can utilize additional relevant features or optimize the parameters of the random forest classifier.
-
----
 
 ### Final Model
 
@@ -295,13 +293,11 @@ The culmination of these efforts resulted in a noteworthy accuracy of 0.746—a 
 
 Fairness analysis aims to determine if a predictive model exhibits bias against specific groups within a population. In our analysis, Group X and Group Y were designated to represent players on the 'red' and 'blue' sides, respectively, to examine potential biases in our model's performance.
 
-Hypotheses Formulated for Analysis:
+Null Hypothesis: The model is unbiased, suggesting that the precision scores for the blue and red teams are comparable, with any observed variations attributable to random fluctuations.
 
-Null Hypothesis (H0): The model is unbiased, suggesting that the precision scores for the blue and red teams are comparable, with any observed variations attributable to random fluctuations.
+Alternative Hypothesis: The model exhibits bias, implying that the precision for the blue team notably exceeds that of the red team.
 
-Alternative Hypothesis (H1): The model exhibits bias, implying that the precision for the blue team notably exceeds that of the red team.
-
-Precision was selected as the metric for evaluation, focusing on the disparity in precision scores between the red and blue team predictions. We established a significance threshold of 0.05. Upon conducting 500 permutation tests, a p-value of 0.51 was observed.
+Precision was selected as the metric for evaluation, focusing on the disparity in precision scores between the red and blue team predictions. We established a significance threshold of 0.05 and conducted 500 permutation tests.
 
 <iframe
   src="assets/Permutation Test: Distribution of Precision Difference (Blue - Red).html"
@@ -310,6 +306,8 @@ Precision was selected as the metric for evaluation, focusing on the disparity i
   frameborder="0"
 ></iframe>
 
-Conclusion:
+### Conclusion
 
-Because we obtained the p-value of 0.51, which is greater than our defined significance level of 0.05, we fail to reject the null hypothesis. As such, there's insufficient evidence to assert that our model favors the blue team over the red team regarding precision scores. This outcome suggests that our model operates without detectable bias, and any differences in precision between the two groups likely stem from chance.
+P-value: 0.51
+
+Because the p-value is greater than the significance level of 0.05, we fail to reject the null hypothesis. As such, there's insufficient evidence to assert that our model favors the blue team over the red team regarding precision scores. This outcome suggests that our model operates without detectable bias, and any differences in precision between the two groups likely stem from chance.
