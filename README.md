@@ -2,8 +2,6 @@
 
 By Jason Huynh (jah037@ucsd.edu) and Jonathan Yi (j8yi@ucsd.edu)
 
-Final Project for DSC80 that uses data science to answer the question: "which role consistently carries their team to victory?"
-
 ---
 
 ## Introduction
