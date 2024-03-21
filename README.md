@@ -2,15 +2,17 @@
 
 By Jason Huynh (jah037@ucsd.edu) and Jonathan Yi (j8yi@ucsd.edu)
 
-Final Project for DSC80.
+Final Project for DSC80 that uses data science to answer the question: "which role consistently carries their team to victory?"
 
 ---
 
 ## Introduction
 
-Welcome to Summoner’s Rift! Since its release in 2009, League of Legends (LoL) has taken the gaming world by storm, becoming the #1 multiplayer online battle arena (MOBA) game in the world. At its core, LoL pits two teams, each comprising five players, in a strategic battle to destroy the opposing team's Nexus. Players select one of five roles*: top, jungle, middle, adc, or support. In such a highly competitive game, players are constantly seeking ways to gain an upper hand, with the choice of role often being a critical factor in securing a win. Our data analysis aims to answer the question: "which role consistently carries their team to victory?"
+Welcome to Summoner’s Rift! Since its release in 2009, League of Legends (LoL) has taken the gaming world by storm, becoming the #1 multiplayer online battle arena (MOBA) game in the world. At its core, LoL pits two teams, each comprising five players, in a strategic battle to destroy the opposing team's Nexus. Players select one of five roles<sup>1</sup>: top, jungle, middle, adc, or support. In such a highly competitive game, players are constantly seeking ways to gain an upper hand, with the choice of role often being a critical factor in securing a win. Our data<sup>2</sup> analysis aims to answer the question: "which role consistently carries their team to victory?"
 
-*The jungle, mid, and support roles will be abbreviated to jng, mid, and sup respectively. As well, the words 'role' and 'position' will be used interchangebly.
+<sup>1</sup>Throughout our project, the jungle, mid, and support roles will be abbreviated to jng, mid, and sup respectively. As well, the words 'role' and 'position' will be used interchangebly.
+
+<sup>2</sup>Our project uses League of Legends Esports Match Data sourced from [Oracle's Elixir](https://oracleselixir.com/tools/downloads), consisting of 125904 rows and 131 columns.
 
 ---
 
@@ -24,7 +26,7 @@ Then, we implemented the calculation and incorporation of the KDA (Kill-Death-As
 
 Lastly, we standardized our dataset's statistics. Employing the z-score formula Z = (X - µ) / σ, we transformed the data into z-scores for each game. To ensure accuracy, we created a custom function and applied it using the .transform(z-score) method after grouping by 'gameid'.
 
-Below are the initial five rows of our dataframe, showcasing the standardized statistics and omitting unnecessary columns for visualization purposes.
+After cleaning, our dataset had 105924 rows and 134 columns. Below are the initial five rows of our dataframe, showcasing the standardized statistics and omitting unnecessary columns for visualization purposes.
 
 |    | gameid                | position   |        KDA |   totalgold |   total cs |   damagetochampions |
 |---:|:----------------------|:-----------|-----------:|------------:|-----------:|--------------------:|
@@ -300,7 +302,7 @@ Alternative Hypothesis: The model exhibits bias, implying that the precision for
 Precision was selected as the metric for evaluation, focusing on the disparity in precision scores between the red and blue team predictions. We established a significance threshold of 0.05 and conducted 500 permutation tests.
 
 <iframe
-  src="assets/Permutation Test: Distribution of Precision Difference (Blue - Red).html"
+  src="assets/Permutation Test Distribution of Precision Difference (Blue - Red).html"
   width="800"
   height="600"
   frameborder="0"
